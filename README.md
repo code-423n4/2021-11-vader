@@ -8,8 +8,6 @@
 - Starts November 9, 2021 00:00 UTC
 - Ends November 15, 2021 23:59 UTC
 
-This repo will be made public before the start of the contest. (C4 delete this line when made public)
-
 # Introduction
 
 Vader is a new form of liquidity protocol that seeks to be self-serving. It uses its own liquidity and awareness of asset purchasing power to support the creation of a collateralized stablecoin. It also is capable of using liquidity units as collateral for synthetic assets, of which it will always have guaranteed redemption liquidity for. It has a fair and transparent incentive strategy to maximise the depth of liquidity pools and adoption of synthetic assets. It uses a liquidity-sensitive fee to ensure safe and sustainable creation of debt, which can increase the capital efficiency of the system.
@@ -17,8 +15,6 @@ Vader is a new form of liquidity protocol that seeks to be self-serving. It uses
 ## Key Features
 
 The following are the key features of Vader Protocol:
-
-
 
 1. Uses a collateralized stablecoin settlement asset
 2. An ability to burn VADER to mint USDV
