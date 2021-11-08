@@ -2,9 +2,10 @@
 
 This `README.md` contains a set of checklists for our contest collaboration.
 
-Your contest will use two repos: 
+Your contest will use two repos:
+
 - **a _contest_ repo** (this one), which is used for scoping your contest and for providing information to contestants (wardens)
-- **a _findings_ repo**, where issues are submitted. 
+- **a _findings_ repo**, where issues are submitted.
 
 Ultimately, when we launch the contest, this contest repo will be made public and will contain the smart contracts to be reviewed and all the information needed for contest participants. The findings repo will be made public after the contest is over and your team has mitigated the identified issues.
 
@@ -38,7 +39,7 @@ Under "SPONSORS ADD INFO HERE" heading below, include the following:
 - [ ] Any other Twitter handles we can/should tag in (e.g. organizers' personal accounts, etc.)
 - [ ] Your Discord URI
 - [ ] Your website
-- [ ] Optional: Do you have any quirks, recurring themes, iconic tweets, community "secret handshake" stuff we could work in? How do your people recognize each other, for example? 
+- [ ] Optional: Do you have any quirks, recurring themes, iconic tweets, community "secret handshake" stuff we could work in? How do your people recognize each other, for example?
 - [ ] Optional: your logo in Discord emoji format
 
 ---
@@ -46,6 +47,7 @@ Under "SPONSORS ADD INFO HERE" heading below, include the following:
 # Contest prep
 
 ## ⭐️ Sponsor: Contest prep
+
 - [ ] Make sure your code is thoroughly commented using the [NatSpec format](https://docs.soliditylang.org/en/v0.5.10/natspec-format.html#natspec-format).
 - [ ] Modify the bottom of this `README.md` file to describe how your code is supposed to work with links to any relevent documentation and any other criteria/details that the C4 Wardens should keep in mind when reviewing. ([Here's a well-constructed example.](https://github.com/code-423n4/2021-06-gro/blob/main/README.md))
 - [ ] Please have final versions of contracts and documentation added/updated in this repo **no less than 8 hours prior to contest start time.**
@@ -53,7 +55,7 @@ Under "SPONSORS ADD INFO HERE" heading below, include the following:
 - [ ] Promote the contest on Twitter (optional: tag in relevant protocols, etc.)
 - [ ] Share it with your own communities (blog, Discord, Telegram, email newsletters, etc.)
 - [ ] Optional: pre-record a high-level overview of your protocol (not just specific smart contract functions). This saves wardens a lot of time wading through documentation.
-- [ ] Designate someone (or a team of people) to monitor DMs & questions in the C4 Discord (**#questions** channel) daily (Note: please *don't* discuss issues submitted by wardens in an open channel, as this could give hints to other wardens.)
+- [ ] Designate someone (or a team of people) to monitor DMs & questions in the C4 Discord (**#questions** channel) daily (Note: please _don't_ discuss issues submitted by wardens in an open channel, as this could give hints to other wardens.)
 - [ ] Delete this checklist and all text above the line below when you're ready.
 
 ---
@@ -77,8 +79,6 @@ Vader is a new form of liquidity protocol that seeks to be self-serving. It uses
 ## Key Features
 
 The following are the key features of Vader Protocol:
-
-
 
 1. Uses a collateralized stablecoin settlement asset
 2. An ability to burn VADER to mint USDV
@@ -213,17 +213,31 @@ The following are the key features of Vader Protocol:
     └── XVader.sol
 ```
 
+```
+├── interfaces
+│   ├── IERC20Metadata.sol
+│   └── ITreasury.sol
+├── lib
+│   ├── FixedPoint.sol
+│   └── FullMath.sol
+├── Ownable.sol
+├── test
+│   └── TestToken.sol
+├── Treasury.sol
+└── VaderBond.sol
+```
+
 There are five different ERC20 tokens in the codebase. Two tokens Synth and LPToken under `dex-v2` directory are standard Burnable and Mintable ERC20 tokens. The LPToken represents liquidity issued in fungible tokens and its total supply is tracked by the Vader pool which represents total liquidity issued against the pair which is not necessarily equal to LPToken’s actual total supply as liquidity can be issued in non-fungible tokens as well.
 The two tokens USDV and Vader under `tokens` directory are standard ERC20 tokens with Vader token having an emission curve covered over 5 years duration.
 The token XVader under `x-vader` directory is a standard ERC20 token that inherits from `ERC20Votes` contract from Openzeppelin. This token is for governance purposes in Vader’s GovernorAlpha contract.
-
-
 
 The Vader approach to implement pools of pairs is different from Uniswap’s. There is a singleton pool contract that implements the logic for pairs. All the pairs comprise of native and foreign assets. The native asset can be either USDV or Vader, while the foreign asset can be any ERC20 compatible token. The pool contract implements the logic for depositing and withdrawing of liquidity as well as swapping between the foreign assets among two different pairs and between native and foreign assets of a pair.
 The liquidity issued against the pairs in pool can be in non-fungible token, fungible token or synthetic token.
 There is a Vader Reserve contract that covers any impermanent loss experienced by liquidity providers.
 The codebase implements a TWAP feature which makes use of aggregation over several Uniswap and Vader pools to determine the true USD value of Vader and USDV, respectively.
 As xVADER token is mintable, the GovernorAlpha contract makes use of the snapshotted total supply of xVADER at the time of proposal creation to determine a proposal’s outcome.
+
+VaderBond is a modification of Olympus DAO / Pro contracts
 
 ## Points of interest
 
@@ -234,3 +248,8 @@ Check if:
 - The emission curve for Vader token works correctly by emitting the correct amount of tokens across eras.
 - The TWAP contract properly and correctly calculates the true USD values for Vader and USDV assets, and the conversion between USDV and Vader is correct.
 - The Veto functionality of GovernorAlpha contract works as intended and does not introduce any vulnerability.
+
+- How should the Treasury.sol contract calculate value of principal token, same way as Olypmus DAO or Pro?
+  Olympus DAO has two methods of calculation, one for RFV tokens and one for LP tokens.
+  Olympus Pro has only one method of calculation.
+- VaderBond removes FixedPoint library which is used in Olympus contracts. Will this cause rounding errors?
