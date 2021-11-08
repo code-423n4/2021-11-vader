@@ -89,7 +89,7 @@ The following are the key features of Vader Protocol:
 
 ## Contracts
 
-.
+```bash
 ├── dex
 │   ├── math
 │   │   └── VaderMath.sol
@@ -211,8 +211,7 @@ The following are the key features of Vader Protocol:
 │   └── TwapOracle.sol
 └── x-vader
     └── XVader.sol
-
-
+```
 
 There are five different ERC20 tokens in the codebase. Two tokens Synth and LPToken under `dex-v2` directory are standard Burnable and Mintable ERC20 tokens. The LPToken represents liquidity issued in fungible tokens and its total supply is tracked by the Vader pool which represents total liquidity issued against the pair which is not necessarily equal to LPToken’s actual total supply as liquidity can be issued in non-fungible tokens as well.
 The two tokens USDV and Vader under `tokens` directory are standard ERC20 tokens with Vader token having an emission curve covered over 5 years duration.
