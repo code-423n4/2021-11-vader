@@ -10,6 +10,8 @@
 
 # Introduction
 
+[White paper](https://github.com/vetherasset/vaderprotocol-whitepaper)
+
 Vader is a new form of liquidity protocol that seeks to be self-serving. It uses its own liquidity and awareness of asset purchasing power to support the creation of a collateralized stablecoin. It also is capable of using liquidity units as collateral for synthetic assets, of which it will always have guaranteed redemption liquidity for. It has a fair and transparent incentive strategy to maximise the depth of liquidity pools and adoption of synthetic assets. It uses a liquidity-sensitive fee to ensure safe and sustainable creation of debt, which can increase the capital efficiency of the system.
 
 ## Key Features
@@ -181,7 +183,6 @@ Check if:
 
 - The code under `dex-v2` directory should be reviewed for any exploits that allow draining of funds from the pool contract involving pairs.
 - There is no inconsistency encountered in the liquidity issuance and redeeming as the liquidity is issued in non-fungible, fungible and synthetic tokens. They should work together seamlessly.
-- The emission curve for Vader token works correctly by emitting the correct amount of tokens across eras.
 - The TWAP contract properly and correctly calculates the true USD values for Vader and USDV assets, and the conversion between USDV and Vader is correct.
 - The Veto functionality of GovernorAlpha contract works as intended and does not introduce any vulnerability.
 
