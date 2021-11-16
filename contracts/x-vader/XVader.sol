@@ -8,7 +8,7 @@ import "../shared/ProtocolConstants.sol";
 
 contract XVader is ProtocolConstants, ERC20Votes, ReentrancyGuard {
     // Address of vader token
-    IERC20 public vader;
+    IERC20 public immutable vader;
 
     /*
      * @dev Initializes contract's state by setting vader's tokens address and
