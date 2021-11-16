@@ -3,9 +3,10 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "../shared/ProtocolConstants.sol";
 
-contract XVader is ProtocolConstants, ERC20Votes {
+contract XVader is ProtocolConstants, ERC20Votes, ReentrancyGuard {
     // Address of vader token
     IERC20 public vader;
 
@@ -25,7 +26,7 @@ contract XVader is ProtocolConstants, ERC20Votes {
     }
 
     // Locks vader and mints xVader
-    function enter(uint256 _amount) external {
+    function enter(uint256 _amount) external nonReentrant {
         // Gets the amount of vader locked in the contract
         uint256 totalVader = vader.balanceOf(address(this));
         // Gets the amount of xVader in existence
@@ -47,7 +48,7 @@ contract XVader is ProtocolConstants, ERC20Votes {
 
     // Claim back your VADER
     // Unlocks the staked + gained vader and burns xVader
-    function leave(uint256 _shares) external {
+    function leave(uint256 _shares) external nonReentrant {
         // Gets the amount of xVader in existence
         uint256 totalShares = totalSupply();
         // Calculates the amount of vader the xVader is worth
