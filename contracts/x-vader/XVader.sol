@@ -49,12 +49,8 @@ contract XVader is ProtocolConstants, ERC20Votes, ReentrancyGuard {
     // Claim back your VADER
     // Unlocks the staked + gained vader and burns xVader
     function leave(uint256 _shares) external nonReentrant {
-        // Gets the amount of xVader in existence
-        uint256 totalShares = totalSupply();
         // Calculates the amount of vader the xVader is worth
-        uint256 vaderAmount = (
-            _shares * vader.balanceOf(address(this))
-        ) / totalShares;
+        uint vaderAmount = (_shares * vader.balanceOf(address(this))) / totalSupply();
 
         _burn(msg.sender, _shares);
         vader.transfer(msg.sender, vaderAmount);
