@@ -52,9 +52,9 @@ contract Treasury is Ownable, ITreasury {
      *   @param _amount uint
      *   @return value uint
      */
-    function valueOfToken(address _principalToken, uint _amount) external view override returns (uint value) {
+    function valueOfToken(address _principalToken, uint _amount) external view override returns (uint) {
         // convert amount to match payout token decimals
-        value = _amount.mul(10**PAYOUT_TOKEN_DECIMALS).div(10**IERC20Metadata(_principalToken).decimals());
+        return _amount.mul(10**PAYOUT_TOKEN_DECIMALS).div(10**IERC20Metadata(_principalToken).decimals());
     }
 
     /**
