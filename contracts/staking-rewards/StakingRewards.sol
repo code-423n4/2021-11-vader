@@ -19,8 +19,8 @@ contract StakingRewards is
 
     /* ========== STATE VARIABLES ========== */
 
-    IERC20 public rewardsToken;
-    IERC20 public stakingToken;
+    IERC20 public immutable rewardsToken;
+    IERC20 public immutable stakingToken;
     uint public periodFinish;
     uint public rewardRate;
     uint public rewardsDuration = 7 days;
