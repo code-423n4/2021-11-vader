@@ -166,6 +166,7 @@ contract VaderBond is Ownable, ReentrancyGuard {
      *  @param _maxPrice uint
      *  @param _depositor address
      *  @return uint
+     *  @dev Deposit resets vesting term for _depositor
      */
     function deposit(
         uint _amount,
