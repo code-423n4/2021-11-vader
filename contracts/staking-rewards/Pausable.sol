@@ -27,12 +27,12 @@ abstract contract Pausable is Owned {
         paused = _paused;
 
         // If applicable, set the last pause time.
-        if (paused) {
+        if (_paused) {
             lastPauseTime = block.timestamp;
         }
 
         // Let everyone know that our pause state has changed.
-        emit PauseChanged(paused);
+        emit PauseChanged(_paused);
     }
 
     event PauseChanged(bool isPaused);
