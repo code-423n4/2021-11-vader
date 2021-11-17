@@ -41,6 +41,10 @@ contract StakingRewards is
         address _rewardsToken,
         address _stakingToken
     ) Owned(_owner) {
+        require(_rewardsDistribution != address(0), "reward dist = zero address");
+        require(_rewardsToken != address(0), "reward token = zero address");
+        require(_stakingToken != address(0), "staking token = zero address");
+
         rewardsToken = IERC20(_rewardsToken);
         stakingToken = IERC20(_stakingToken);
         rewardsDistribution = _rewardsDistribution;
