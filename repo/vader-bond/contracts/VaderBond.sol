@@ -15,6 +15,14 @@ contract VaderBond is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
     using SafeMath for uint;
 
+    enum PARAMETER {
+        VESTING,
+        PAYOUT,
+        DEBT
+    }
+
+    event SetBondTerms(PARAMETER indexed param, uint input);
+    event SetAdjustment(bool add, uint rate, uint target, uint buffer);
     event BondCreated(uint deposit, uint payout, uint expires);
     event BondRedeemed(address indexed recipient, uint payout, uint remaining);
     event BondPriceChanged(uint internalPrice, uint debtRatio);
@@ -114,12 +122,6 @@ contract VaderBond is Ownable, ReentrancyGuard {
         lastDecay = block.number;
     }
 
-    enum PARAMETER {
-        VESTING,
-        PAYOUT,
-        DEBT
-    }
-
     /**
      *  @notice set parameters for new bonds
      *  @param _param PARAMETER
@@ -137,6 +139,7 @@ contract VaderBond is Ownable, ReentrancyGuard {
         } else if (_param == PARAMETER.DEBT) {
             terms.maxDebt = _input;
         }
+        emit SetBondTerms(_param, _input);
     }
 
     /**
@@ -154,6 +157,7 @@ contract VaderBond is Ownable, ReentrancyGuard {
     ) external onlyOwner {
         require(_rate <= terms.controlVariable.mul(3) / 100, "rate > 3%");
         adjustment = Adjust({add: _add, rate: _rate, target: _target, buffer: _buffer, lastBlock: block.number});
+        emit SetAdjustment(_add, _rate, _target, _buffer);
     }
 
     /**
