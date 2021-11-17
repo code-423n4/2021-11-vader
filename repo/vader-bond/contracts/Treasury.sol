@@ -16,6 +16,7 @@ contract Treasury is Ownable, ITreasury {
     event Withdraw(address indexed token, address indexed destination, uint amount);
 
     uint8 private immutable PAYOUT_TOKEN_DECIMALS;
+    uint private immutable PAYOUT_TOKEN_SCALE; // 10 ** decimals
 
     address public immutable payoutToken;
     mapping(address => bool) public isBondContract;
@@ -23,7 +24,9 @@ contract Treasury is Ownable, ITreasury {
     constructor(address _payoutToken) {
         require(_payoutToken != address(0), "payout token = zero");
         payoutToken = _payoutToken;
-        PAYOUT_TOKEN_DECIMALS = IERC20Metadata(_payoutToken).decimals();
+        uint8 decimals = IERC20Metadata(_payoutToken).decimals();
+        PAYOUT_TOKEN_DECIMALS = decimals;
+        PAYOUT_TOKEN_SCALE = 10**decimals;
     }
 
     modifier onlyBondContract() {
@@ -54,7 +57,7 @@ contract Treasury is Ownable, ITreasury {
      */
     function valueOfToken(address _principalToken, uint _amount) external view override returns (uint) {
         // convert amount to match payout token decimals
-        return _amount.mul(10**PAYOUT_TOKEN_DECIMALS).div(10**IERC20Metadata(_principalToken).decimals());
+        return _amount.mul(PAYOUT_TOKEN_SCALE).div(10**IERC20Metadata(_principalToken).decimals());
     }
 
     /**
