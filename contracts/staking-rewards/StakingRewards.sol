@@ -155,7 +155,7 @@ contract StakingRewards is
             tokenAddress != address(stakingToken),
             "Cannot withdraw the staking token"
         );
-        IERC20(tokenAddress).safeTransfer(owner, tokenAmount);
+        IERC20(tokenAddress).safeTransfer(msg.sender, tokenAmount);
         emit Recovered(tokenAddress, tokenAmount);
     }
 
